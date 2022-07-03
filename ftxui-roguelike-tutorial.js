@@ -5163,6 +5163,16 @@ var ASM_CONSTS = {
   }
   
 
+  function _getentropy(buffer, size) {
+      if (!_getentropy.randomDevice) {
+        _getentropy.randomDevice = getRandomDevice();
+      }
+      for (var i = 0; i < size; i++) {
+        HEAP8[(((buffer)+(i))>>0)] = _getentropy.randomDevice();
+      }
+      return 0;
+    }
+
   function _setTempRet0(val) {
       setTempRet0(val);
     }
@@ -5962,6 +5972,7 @@ var asmLibraryArg = {
   "fd_read": _fd_read,
   "fd_seek": _fd_seek,
   "fd_write": _fd_write,
+  "getentropy": _getentropy,
   "memory": wasmMemory,
   "setTempRet0": _setTempRet0,
   "strftime_l": _strftime_l
@@ -6072,10 +6083,13 @@ var dynCall_iii = Module["dynCall_iii"] = createExportWrapper("dynCall_iii");
 var dynCall_v = Module["dynCall_v"] = createExportWrapper("dynCall_v");
 
 /** @type {function(...*):?} */
-var dynCall_viii = Module["dynCall_viii"] = createExportWrapper("dynCall_viii");
+var dynCall_viiii = Module["dynCall_viiii"] = createExportWrapper("dynCall_viiii");
 
 /** @type {function(...*):?} */
 var dynCall_iiiiii = Module["dynCall_iiiiii"] = createExportWrapper("dynCall_iiiiii");
+
+/** @type {function(...*):?} */
+var dynCall_viii = Module["dynCall_viii"] = createExportWrapper("dynCall_viii");
 
 /** @type {function(...*):?} */
 var dynCall_iiii = Module["dynCall_iiii"] = createExportWrapper("dynCall_iiii");
@@ -6088,9 +6102,6 @@ var dynCall_iidiiii = Module["dynCall_iidiiii"] = createExportWrapper("dynCall_i
 
 /** @type {function(...*):?} */
 var dynCall_viijii = Module["dynCall_viijii"] = createExportWrapper("dynCall_viijii");
-
-/** @type {function(...*):?} */
-var dynCall_viiii = Module["dynCall_viiii"] = createExportWrapper("dynCall_viiii");
 
 /** @type {function(...*):?} */
 var dynCall_iiiii = Module["dynCall_iiiii"] = createExportWrapper("dynCall_iiiii");
